@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MontesSaveur - Vente de Paniers Repas</title>
+    <style>
+        /* Style général */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e0f7fa, #b2dfdb);
+            color: #333;
+        }
+
+        /* Bannière */
+        header {
+            background: linear-gradient(to right, #4CAF50, #2196F3);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header img {
+            max-width: 250px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+            color: #fff3e6;
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #e0f7fa;
+            font-weight: bold;
+        }
+
+        /* Section principale */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: linear-gradient(to bottom, #e0f7fa, #b2dfdb);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+        }
+
+        /* Titres de sections */
+        h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #4CAF50, #2196F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+
+        /* Section Mission */
+        #mission {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 1200px;
+            background: #ffffff;
+            border: 2px solid #4CAF50;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #mission .text {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        #mission img {
+            max-width: 400px;
+            height: auto;
+            margin-left: 20px;
+        }
+
+        /* Section Menus */
+        #menus {
+            margin: 20px auto;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .meal-card {
+            background-color: #ffffff;
+            border: 2px solid #4CAF50;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: 200px;
+        }
+
+        .meal-card img {
+            max-width: 150px;
+            border-radius: 15px;
+        }
+
+        .meal-card .details {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .meal-card h3 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #2196F3;
+            font-weight: bold;
+        }
+
+        .meal-card p {
+            margin: 5px 0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .meal-card .price {
+            font-size: 1.5em;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .meal-card .info {
+            margin: 5px 0;
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Bouton de réservation */
+        .btn-reserve {
+            background: linear-gradient(to right, #4CAF50, #2196F3);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-reserve:hover {
+            background: linear-gradient(to right, #388E3C, #1976D2);
+        }
+
+        /* Section Dons */
+        #dons {
+            margin: 20px auto;
+            max-width: 1200px;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Fenêtre modale */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Pied de page */
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(to right, #4CAF50, #2196F3);
+            color: white;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+            header p {
+                font-size: 1em;
+            }
+            .meal-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .meal-card img {
+                max-width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Bannière -->
+    <header>
+        <img src="https://cdn.discordapp.com/attachments/1272739569841733717/1284846420129742860/Capture_decran_2024-09-15_135623.png?ex=66f15879&is=66f006f9&hm=2291ae9cb5664eeff7fdbc8769280c1c8d62032427864846e7228f094e5d60bd&" alt="Logo MontesSaveur">
+        <h1>MontesSaveur</h1>
+        <p>Votre solution contre le gaspillage alimentaire</p>
+    </header>
+
+    <div class="container">
+        <!-- Section Mission -->
+<section id="mission" style="font-family: Arial, sans-serif; font-weight: bold;">
+    <div class="text">
+        <h2 style="font-weight: bold;">Notre Mission</h2>
+        <p style="font-weight: bold;">Notre mission est de réduire le gaspillage alimentaire tout en soutenant notre établissement scolaire. Chaque repas acheté contribue à notre cause et aide à financer nos projets éducatifs.</p>
+        <p style="font-weight: bold;">Nous nous engageons à offrir des repas bio et de qualité, préparés avec soin à partir de surplus de nourriture, afin de garantir que chaque bouchée est à la fois savoureuse et durable.</p>
+        <p style="font-weight: bold;">Pour en savoir plus sur notre établissement, visitez <a href="https://www.montessorimioscampus.com/" target="_blank">notre site officiel</a>.</p>
+    </div>
+    <img src="https://cdn.pixabay.com/photo/2017/03/15/08/21/cook-2141241_960_720.jpg" alt="Mission">
+</section>
+
+        <!-- Menus -->
+        <section id="menus">
+            <h2>Nos Menus</h2>
+            <div class="meal-card" data-stock="5">
+                <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/burger-1238257_960_720.jpg" alt="Menu 1">
+                <div class="details">
+                    <h3>Menu Spécial 1</h3>
+                    <p>Un délicieux mélange de légumes bio.</p>
+                    <p class="price">4,00 €</p>
+                    <p class="info stock">Stock restant : <span class="stock-count">5</span></p>
+                    <button class="btn-reserve" onclick="openModal(this)">Réservez maintenant</button>
+                </div>
+            </div>
+            <div class="meal-card" data-stock="0">
+                <img src="https://cdn.pixabay.com/photo/2016/09/09/12/48/salad-5570_960_720.jpg" alt="Menu 2">
+                <div class="details">
+                    <h3>Menu Spécial 2</h3>
+                    <p>Une salade fraîche et équilibrée.</p>
+                    <p class="price">4,00 €</p>
+                    <p class="info stock">Stock restant : <span class="stock-count">0</span></p>
+                    <button class="btn-reserve" onclick="openModal(this)" disabled>Réservez maintenant</button>
+                </div>
+            </div>
+            <div class="meal-card" data-stock="3">
+                <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/pasta-1238256_960_720.jpg" alt="Menu 3">
+                <div class="details">
+                    <h3>Menu Spécial 3</h3>
+                    <p>Pâtes faites maison avec des ingrédients bio.</p>
+                    <p class="price">4,00 €</p>
+                    <p class="info stock">Stock restant : <span class="stock-count">3</span></p>
+                    <button class="btn-reserve" onclick="openModal(this)">Réservez maintenant</button>
+                </div>
+            </div>
+        </section>
+
+       <!-- Section Dons -->
+<section id="dons" style="border: 2px solid #4CAF50; border-radius: 15px; padding: 20px; background-color: #f9f9f9; font-family: Arial, sans-serif; font-weight: bold;">
+    <h2 style="font-weight: bold;">Faites un Don</h2>
+    <p style="font-weight: bold;">Chaque don compte et contribue directement à notre mission de réduction du gaspillage alimentaire. En soutenant notre initiative, vous aidez à financer des repas sains et durables pour nos élèves.</p>
+    <p style="font-weight: bold;">Votre générosité nous permet de continuer à proposer des repas de qualité tout en sensibilisant les jeunes à l'importance de la durabilité. Ensemble, nous pouvons faire une réelle différence !</p>
+    <p style="font-weight: bold;">Merci de votre soutien indéfectible.</p>
+    <div id="donate-button-container" style="text-align: center;">
+        <div id="donate-button"></div>
+        <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+        <script>
+            PayPal.Donation.Button({
+                env: 'production',
+                hosted_button_id: 'NRLMAMGLPFM7S',
+                image: {
+                    src: 'https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif',
+                    alt: 'Faites un don avec PayPal',
+                    title: 'PayPal - Une façon sûre et simple de donner en ligne !',
+                }
+            }).render('#donate-button');
+        </script>
+    </div>
+</section>   
+
+        <!-- Fenêtre modale -->
+        <div id="reservation-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Paiement</h2>
+                <p>Veuillez utiliser le bouton ci-dessous pour effectuer votre paiement.</p>
+                <div id="paypal-container-U4C9JYVW7JL72"></div>
+                <script src="https://www.paypal.com/sdk/js?client-id=BAAR82rKy11Dd-bDGXCN1sBKb5d7apIh2zNYYUEvceRdhfebcyw8WCfCWzVNj6nzow10A2ujVA_0D4pMGs&components=hosted-buttons&disable-funding=venmo&currency=EUR"></script>
+                <script>
+                    paypal.HostedButtons({
+                        hostedButtonId: "U4C9JYVW7JL72",
+                    }).render("#paypal-container-U4C9JYVW7JL72");
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pied de page -->
+    <footer>
+        <p>&copy; Kira/MontesSaveur Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function changeImage() {
+            const url = document.getElementById("image-url").value;
+            const imgTags = document.querySelectorAll('.meal-card img');
+
+            // Changez l'image de chaque carte de menu
+            imgTags.forEach(img => {
+                if (url) {
+                    img.src = url;
+                }
+            });
+        }
+
+        function openModal() {
+            document.getElementById("reservation-modal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("reservation-modal").style.display = "none";
+        }
+    </script>
+</body>
+</html>
